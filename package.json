@@ -1,0 +1,25 @@
+{
+  "name": "optimized-class-timetable-generator",
+  "version": "1.0.0",
+  "description": "Intelligent Scheduling for Smarter Campuses",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deepesh224-ux/Optimized-Class-Timetable-Generator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/deepesh224-ux/Optimized-Class-Timetable-Generator/issues"
+  },
+  "homepage": "https://github.com/deepesh224-ux/Optimized-Class-Timetable-Generator#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10",
+    "prisma": "^6.18.0"
+  }
+}
