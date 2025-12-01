@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { useUiStore } from '../store/ui.store';
 
 const Settings = () => {
