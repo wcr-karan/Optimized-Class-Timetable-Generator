@@ -11,6 +11,8 @@ import FacultyManagement from '../features/faculty/FacultyManagement';
 import ClassroomManagement from '../features/classrooms/ClassroomManagement';
 import SubjectManagement from '../features/subjects/SubjectManagement';
 import TimetableGenerator from '../features/timetable/TimetableGenerator';
+import TimetableApprovalList from '../features/timetable/TimetableApprovalList';
+import TimetableApproval from '../features/timetable/TimetableApproval';
 import { useAuth } from '../hooks/useAuth';
 import RoleGuard from '../components/auth/RoleGuard';
 import { Role } from '../types/types';
@@ -97,6 +99,30 @@ const AppRoutes = () => {
                             <RoleGuard allowedRoles={[Role.SUPERADMIN, Role.TIMETABLE_ADMIN, Role.HOD, Role.FACULTY]}>
                                 <DashboardLayout>
                                     <TimetableGenerator />
+                                </DashboardLayout>
+                            </RoleGuard>
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/dashboard/approvals"
+                    element={
+                        <ProtectedRoute>
+                            <RoleGuard allowedRoles={[Role.SUPERADMIN, Role.TIMETABLE_ADMIN, Role.HOD]}>
+                                <DashboardLayout>
+                                    <TimetableApprovalList />
+                                </DashboardLayout>
+                            </RoleGuard>
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/dashboard/approvals/:id"
+                    element={
+                        <ProtectedRoute>
+                            <RoleGuard allowedRoles={[Role.SUPERADMIN, Role.TIMETABLE_ADMIN, Role.HOD]}>
+                                <DashboardLayout>
+                                    <TimetableApproval />
                                 </DashboardLayout>
                             </RoleGuard>
                         </ProtectedRoute>

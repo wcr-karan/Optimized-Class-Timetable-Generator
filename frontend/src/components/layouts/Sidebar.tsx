@@ -12,6 +12,7 @@ const Sidebar = () => {
         { path: '/dashboard/classrooms', label: 'Classrooms', icon: '🏫', roles: [Role.SUPERADMIN, Role.TIMETABLE_ADMIN] },
         { path: '/dashboard/subjects', label: 'Subjects', icon: '📚', roles: [Role.SUPERADMIN, Role.TIMETABLE_ADMIN, Role.HOD] },
         { path: '/dashboard/timetable', label: 'Timetable', icon: '📅', roles: [Role.SUPERADMIN, Role.TIMETABLE_ADMIN, Role.HOD, Role.FACULTY] },
+        { path: '/dashboard/approvals', label: 'Approvals', icon: '✅', roles: [Role.SUPERADMIN, Role.TIMETABLE_ADMIN, Role.HOD] },
         { path: '/settings', label: 'Settings', icon: '⚙️', roles: [Role.SUPERADMIN, Role.TIMETABLE_ADMIN, Role.HOD, Role.FACULTY, Role.VIEWER] },
     ];
 
