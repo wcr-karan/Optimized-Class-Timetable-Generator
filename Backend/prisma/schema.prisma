@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -38,8 +38,8 @@ model Faculty {
   phone               String?
   maxWeeklyLoad       Int
   averageLeavesPerMonth Float    @default(0)
-  availableDays       Json
-  preferredSlots      Json?
+  availableDays       String    // JSON string: ["MONDAY", "TUESDAY", ...]
+  preferredSlots      String?   // JSON string: ["09:00-10:00", ...]
   departmentId        Int
   department          Department @relation(fields: [departmentId], references: [id])
 
@@ -98,8 +98,8 @@ model Subject {
   type           String    // Lecture / Lab / Tutorial
   semester       Int
   durationPerClass Int?
-  prerequisites  Json?
-  allowedRoomTypes Json?
+  prerequisites  String?   // JSON string
+  allowedRoomTypes String? // JSON string
 
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
@@ -160,7 +160,7 @@ model AuthorizedUser {
   name         String
   email        String    @unique
   password     String
-  role         Role      @default(FACULTY)
+  role         String    @default("FACULTY") // SUPERADMIN | TIMETABLE_ADMIN | HOD | FACULTY | VIEWER
   departmentId Int?
   phone        String?
   isActive     Boolean   @default(true)
@@ -172,13 +172,8 @@ model AuthorizedUser {
   generatedTimetables Timetable[]
 }
 
-enum Role {
-  SUPERADMIN
-  TIMETABLE_ADMIN
-  HOD
-  FACULTY
-  VIEWER
-}
+// Enum values stored as strings in SQLite
+// Role: SUPERADMIN | TIMETABLE_ADMIN | HOD | FACULTY | VIEWER
 
 // --------------------------
 // Timetables
@@ -187,8 +182,8 @@ model Timetable {
   id           Int       @id @default(autoincrement())
   name         String
   generatedById Int
-  status       TimetableStatus @default(PENDING)
-  scoreJson    Json?
+  status       String    @default("PENDING") // PENDING | APPROVED | REJECTED
+  scoreJson    String?   // JSON string
 
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
@@ -198,11 +193,8 @@ model Timetable {
   approvals    Approval[]
 }
 
-enum TimetableStatus {
-  PENDING
-  APPROVED
-  REJECTED
-}
+// Enum values stored as strings in SQLite
+// TimetableStatus: PENDING | APPROVED | REJECTED
 
 // --------------------------
 // Approval
@@ -211,7 +203,7 @@ model Approval {
   id          Int       @id @default(autoincrement())
   timetableId Int
   approverId  Int
-  status      ApprovalStatus
+  status      String    // PENDING | APPROVED | REJECTED
   comments    String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -220,9 +212,6 @@ model Approval {
   approver    AuthorizedUser @relation(fields: [approverId], references: [id])
 }
 
-enum ApprovalStatus {
-  PENDING
-  APPROVED
-  REJECTED
-}
+// Enum values stored as strings in SQLite
+// ApprovalStatus: PENDING | APPROVED | REJECTED
 

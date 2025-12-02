@@ -1,9 +1,14 @@
 const OpenAI = require("openai");
 
-const client = new OpenAI({
-    baseURL: "https://models.github.ai/inference",
-    apiKey: process.env.GITHUB_OPENAI_API_KEY
-});
+let client = null;
+
+// Only initialize OpenAI client if API key is provided
+if (process.env.GITHUB_OPENAI_API_KEY || process.env.OPENAI_API_KEY) {
+    client = new OpenAI({
+        baseURL: process.env.GITHUB_OPENAI_API_KEY ? "https://models.github.ai/inference" : undefined,
+        apiKey: process.env.GITHUB_OPENAI_API_KEY || process.env.OPENAI_API_KEY
+    });
+}
 
 const buildPrompt = (data) => {
     return [
@@ -38,6 +43,10 @@ const buildPrompt = (data) => {
 };
 
 const callAiModel = async (messages) => {
+    if (!client) {
+        throw new Error("OpenAI API key not configured. Please set GITHUB_OPENAI_API_KEY or OPENAI_API_KEY in your .env file.");
+    }
+
     try {
         const response = await client.chat.completions.create({
             messages: messages,
