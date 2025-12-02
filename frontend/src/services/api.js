@@ -6,6 +6,7 @@ import { handleApiError, notifyError } from './api.errors';
 const api = axios.create({
     baseURL: API_URL,
     timeout: API_TIMEOUT,
+    withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
     },
